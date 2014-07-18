@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>VSEncuestas | {{$section}}</title>
+		<title>M&eacute;xico 360 | {{$section}}</title>
 		<meta charset="UTF-8" />
 		<link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
 		<link rel="stylesheet" href="{{asset('css/default.css')}}">
@@ -19,21 +19,17 @@
 			    	<img src="{{asset('img/logo.png')}}" alt="" style="margin: -15px">
 			    </a>
 			    <a class="navbar-brand" href="#">
-			    	Sistema Encuestas | {{$section}}
+			    	M&eacute;xico 360 | {{$section}}
 			    </a>
 			</div>
 
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
 					<li>
-                                            <?php if(Auth::user()->user_type==1){ ?>
-						{{link_to('admin/users', 'Usuarios')}}
-                                            <?php } ?>
+                                            {{link_to('admin/industry', 'Industrias')}}
 					</li>
-					<li>
-                                            <?php if(Auth::user()->user_type==1 || Auth::user()->user_type==3){ ?>
-						{{link_to('admin/projects', 'Proyectos')}}
-                                            <?php } ?>
+                                        <li>
+                                            {{link_to('admin/argument', 'Argumentos')}}
 					</li>
 					<!-- <li><a href="#">Link</a></li>
 					<li class="dropdown">

@@ -1,7 +1,7 @@
 <!DOCTYPE >
 <html>
 	<head>
-		<title>VSEncuestas | Iniciar Sesión</title>
+		<title>Pro México 360 | Iniciar Sesión</title>
 		<meta charset="UTF-8">
 		<link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
 		<style type="text/css">
@@ -49,10 +49,10 @@
 				<h2 class="form-signin-heading">Inicia Sesión</h2>				
 			</div>
 			<div>
-				<input type="text" name="email" class="input-block-level form-control" placeholder="Email...">				
+				<input type="text" name="email" class="input-block-level form-control" placeholder="Correo Electr&oacute;nico">
 			</div>
 			<div>
-				<input type="password" name="password" class="input-block-level form-control" placeholder="Password...">				
+				<input type="password" name="password" class="input-block-level form-control" placeholder="Contrase&ntilde;a">
 			</div>
 			<button class="btn btn-large btn-primary" type="submit">Iniciar Sesión</button>
 			{{Form::close()}}

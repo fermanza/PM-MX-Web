@@ -1,0 +1,50 @@
+body {
+	background-color: #fbfbfb;
+	padding-top: 70px;
+}
+
+div.container {
+	background-color: white;
+	border-style: solid;
+	border-radius: 5px;
+	border-color: #EEE;
+	border-width: 1px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+        margin-bottom: 30px;
+}
+.td-id{
+    width: 7%;
+}
+.td-arguments{
+    width: 70%;
+}
+
+.navbar-default{
+	background-color: #000000;
+	box-shadow: 0px 0px 5px #CCC;
+}
+
+.navbar-default .navbar-brand {
+	color: #DDDDDD;
+        margin-left: 5px;
+        margin-top: -5px;
+}
+
+.navbar-default .navbar-nav>li>a {
+	color: #DDDDDD;
+}
+
+.navbar-default .navbar-nav>li>a:hover {
+	color: #FFFFFF;
+}
+
+.navbar-default .navbar-brand:hover {
+	cursor: default;
+	color: #FFFFFF;
+}
+
+.navbar-default .navbar-nav>.open>a, .navbar-default .navbar-nav>.open>a:hover, .navbar-default .navbar-nav>.open>a:focus {
+	color: white;
+	background-color: #d06600;
+}

@@ -12,8 +12,7 @@
  */
 
 Route::get('/', function() {
-//    return Redirect::to('/admin');
-    return Redirect::to('/admin/login');
+    return Redirect::to('/admin');
 });
 
 Route::get('/admin', function() {
@@ -28,20 +27,28 @@ Route::get('/admin/login', 'LoginController@index');
 Route::post('/admin/logon', 'LoginController@logon');
 Route::get('/admin/login/logout', 'LoginController@logout');
 
-Route::get('/admin/profile', array('before' => 'auth', 'uses' => 'UsersController@profile'));
-Route::post('/admin/save-profile', array('before' => 'auth', 'uses' => 'UsersController@save_profile'));
+//Route::get('/admin/profile', array('before' => 'auth', 'uses' => 'UsersController@profile'));
+//Route::post('/admin/save-profile', array('before' => 'auth', 'uses' => 'UsersController@save_profile'));
 
-Route::get('/admin/home', array('before' => 'auth', 'uses' => 'LoginController@index'));
+Route::get('/admin/home', array('before' => 'auth', 'uses' => 'HomeController@index'));
 
-Route::get('/admin/users', array('before' => 'auth', 'uses' => 'UsersController@index'));
-Route::get('/admin/users/create', array('before' => 'auth', 'uses' => 'UsersController@create'));
-Route::post('/admin/users/save-create', array('before' => 'auth', 'uses' => 'UsersController@save_create'));
-Route::get('/admin/users/update/{num}', array('before' => 'auth', 'uses' => 'UsersController@update'));
-Route::post('/admin/users/save-update', array('before' => 'auth', 'uses' => 'UsersController@save_update'));
-Route::get('/admin/users/details/{num}', array('before' => 'auth', 'uses' => 'UsersController@details'));
-Route::get('/admin/users/delete/{num}', array('before' => 'auth', 'uses' => 'UsersController@delete'));
-Route::post('/admin/users/delete', array('before' => 'auth', 'uses' => 'UsersController@delete_user'));
+Route::get('/admin/industry', array('before' => 'auth', 'uses' => 'IndustriesController@index'));
+Route::get('/admin/industry/create', array('before' => 'auth', 'uses' => 'IndustriesController@create'));
+Route::post('/admin/industry/save-create', array('before' => 'auth', 'uses' => 'IndustriesController@save_create'));
+Route::get('/admin/industry/update/{num}', array('before' => 'auth', 'uses' => 'IndustriesController@update'));
+Route::post('/admin/industry/save-update', array('before' => 'auth', 'uses' => 'IndustriesController@save_update'));
+Route::get('/admin/industry/details/{num}', array('before' => 'auth', 'uses' => 'IndustriesController@details'));
+Route::get('/admin/industry/delete/{num}', array('before' => 'auth', 'uses' => 'IndustriesController@delete'));
+Route::post('/admin/industry/delete', array('before' => 'auth', 'uses' => 'IndustriesController@delete_user'));
 
+Route::get('/admin/argument', array('before' => 'auth', 'uses' => 'ArgumentsController@index'));
+Route::get('/admin/argument/create', array('before' => 'auth', 'uses' => 'ArgumentsController@create'));
+Route::post('/admin/argument/save-create', array('before' => 'auth', 'uses' => 'ArgumentsController@save_create'));
+Route::get('/admin/argument/update/{num}', array('before' => 'auth', 'uses' => 'ArgumentsController@update'));
+Route::post('/admin/argument/save-update', array('before' => 'auth', 'uses' => 'ArgumentsController@save_update'));
+Route::get('/admin/argument/details/{num}', array('before' => 'auth', 'uses' => 'ArgumentsController@details'));
+Route::get('/admin/argument/delete/{num}', array('before' => 'auth', 'uses' => 'ArgumentsController@delete'));
+Route::post('/admin/argument/delete', array('before' => 'auth', 'uses' => 'ArgumentsController@delete_user'));
 
 //Webservices
 
@@ -49,11 +56,11 @@ Route::post('/ws-content/json/ws-login', function() {
             $data = Input::get('data');
             $data_decoded = json_decode($data);
 
-            $username = $data_decoded->user;
+            $email = $data_decoded->email;
             $password = $data_decoded->password;
 
-            if (Auth::validate(array('email' => $username, 'password' => $password))) {
-                $user = User::where('email', '=', $username)->first();
+            if (Auth::validate(array('email' => $email, 'password' => $password))) {
+                $user = User::where('email', '=', $email)->first();
 
                 if (Hash::check($password, $user->password)) {
                     return array(
@@ -343,5 +350,5 @@ Route::post('/ws-content/json/ws-register', function() {
         });
 
 Route::get('/hash', function() {
-            return Hash::make('password123');
-        });
+    return Hash::make('asdfasdf');
+});
