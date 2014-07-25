@@ -48,3 +48,10 @@ div.container {
 	color: white;
 	background-color: #d06600;
 }
+.black{
+    color: #000000;
+    font-weight: bold;
+}
+.bottom-margin-industries{
+    margin-bottom: 30px;
+}

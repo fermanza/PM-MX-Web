@@ -2,7 +2,7 @@
 
 @section('content')
 
-	{{link_to('/admin/industry/create', 'Agregar', array('class' => 'btn btn-primary pull-right'))}}
+	{{link_to('/admin/industry/create', 'Agregar', array('class' => 'btn btn-success pull-right'))}}
 	<div class="clearfix"></div>
 
 	<table class="table">

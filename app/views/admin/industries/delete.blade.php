@@ -7,10 +7,10 @@
 	<fieldset>
 		<legend>Eliminar Industria</legend>
 
-		<div class="form-group">
-			<label for="" class="col-sm-2 control-label">Nombre</label>
+		<div class="form-group bottom-margin-industries">
+			<label for="" class="col-sm-2 control-label black">Nombre</label>
 			<div class="col-sm-10">
-				{{Form::text('name', Input::old('name') ? Input::old('name') : $industry->name, array('class' => 'form-control', 'disabled') )}}
+				{{Form::text('name', Input::old('name') ? Input::old('name') : $industry->name, array('class' => 'form-control black', 'disabled') )}}
 			</div>
 		</div>
                 <?php $i = 0; ?>

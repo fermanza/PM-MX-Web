@@ -10,7 +10,8 @@ class LoginController extends BaseController {
 
         if (Auth::attempt(array('email' => Input::get('email'), 'password' => Input::get('password')))) {
             return Redirect::to('/admin/home');
-        } else {
+        }
+        else {
             return Redirect::to('/admin/login')->with('mensaje', 'Datos incorrectos');
         }
     }

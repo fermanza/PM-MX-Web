@@ -14,8 +14,7 @@ class IndustriesController extends BaseController {
         return View::make('admin.industries.form')
                         ->with('section', 'Nuevo Usuario')
                         ->with('action', 'save-create')
-                        ->with('user', new User)
-                        ->with('user_type', UserType::all());
+                        ->with('industry', new Industry);
     }
 
     public function save_create() {
@@ -54,11 +53,15 @@ class IndustriesController extends BaseController {
     }
 
     public function update($id) {
+        $industry = Industry::find($id);
+        $industry->arguments = Argument::where('active', '=', 1)
+                ->where('industry_id', '=', $industry->id)
+                ->get();
+        
         return View::make('admin.industries.form')
-                        ->with('section', 'Modificar Usuario')
+                        ->with('section', 'Modificar Industria')
                         ->with('action', 'save-update')
-                        ->with('user', User::find($id))
-                        ->with('user_type', UserType::all());
+                        ->with('industry', $industry);
     }
 
     public function save_update() {

@@ -11,11 +11,10 @@ class ArgumentsController extends BaseController {
     }
 
     public function create() {
-        return View::make('admin.industries.form')
-                        ->with('section', 'Nuevo Usuario')
+        return View::make('admin.arguments.form')
+                        ->with('section', 'Nuevo Argumento')
                         ->with('action', 'save-create')
-                        ->with('user', new User)
-                        ->with('user_type', UserType::all());
+                        ->with('argument', new Argument);
     }
 
     public function save_create() {
