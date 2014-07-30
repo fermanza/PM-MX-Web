@@ -40,7 +40,7 @@ Route::get('/admin/industry/update/{num}', array('before' => 'auth', 'uses' => '
 Route::post('/admin/industry/save-update', array('before' => 'auth', 'uses' => 'IndustriesController@save_update'));
 Route::get('/admin/industry/details/{num}', array('before' => 'auth', 'uses' => 'IndustriesController@details'));
 Route::get('/admin/industry/delete/{num}', array('before' => 'auth', 'uses' => 'IndustriesController@delete'));
-Route::post('/admin/industry/delete', array('before' => 'auth', 'uses' => 'IndustriesController@delete_user'));
+Route::post('/admin/industry/delete', array('before' => 'auth', 'uses' => 'IndustriesController@delete_industry'));
 
 Route::get('/admin/argument', array('before' => 'auth', 'uses' => 'ArgumentsController@index'));
 Route::get('/admin/argument/create', array('before' => 'auth', 'uses' => 'ArgumentsController@create'));
@@ -49,7 +49,7 @@ Route::get('/admin/argument/update/{num}', array('before' => 'auth', 'uses' => '
 Route::post('/admin/argument/save-update', array('before' => 'auth', 'uses' => 'ArgumentsController@save_update'));
 Route::get('/admin/argument/details/{num}', array('before' => 'auth', 'uses' => 'ArgumentsController@details'));
 Route::get('/admin/argument/delete/{num}', array('before' => 'auth', 'uses' => 'ArgumentsController@delete'));
-Route::post('/admin/argument/delete', array('before' => 'auth', 'uses' => 'ArgumentsController@delete_user'));
+Route::post('/admin/argument/delete', array('before' => 'auth', 'uses' => 'ArgumentsController@delete_argument'));
 
 //Webservices
 
@@ -61,7 +61,7 @@ Route::post('/ws-content/json/ws-industries_by_language_id', function() {
     $language_id = $data_decoded->language_id;
 
     if ($app_name == "Mexico360") {
-        $industries = Industry::select("id", "name")
+        $industries = Industry::select("id", "name", "bg_color", "txt_color")
                 ->where('language_id', '=', $language_id)
                 ->get();
 

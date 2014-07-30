@@ -2,6 +2,30 @@
 
 @section('content')
 
+<link href="{{asset('js/jquery-ui/ui.colorpicker.css')}}" rel="stylesheet">
+
+<script src="{{asset('js/jquery-ui/external/jquery/jquery.js')}}" language="JavaScript"></script>
+<script src="{{asset('js/jquery-ui/jq.color.js')}}" language="JavaScript"></script>
+<script language="JavaScript">
+
+$(document).ready(function() {
+
+        var hideit = function(e, ui) {
+            $(this).val('#' + ui.hex);
+            $('.ui-colorpicker').css('display', 'none');
+        };
+        $('#bg #colorpicker').colorpicker({hide: hideit, submit: hideit});
+
+        $('#dochange').click(function() {
+
+            $('body').css('background-color', $('#colorpicker').val());
+
+            return false;
+        });
+
+    });
+
+</script>
 	{{Form::open( array('url' => '/admin/arguments/'.$action, 'method' => 'POST', 'role' => 'form', 'class' => 'form-horizontal' ) )}}
 		{{Form::hidden('id', $argument->id)}}
 	<fieldset>

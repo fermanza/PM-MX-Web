@@ -67,22 +67,18 @@ class IndustriesController extends BaseController {
     public function save_update() {
 
         $validator = Validator::make(
-                        Input::all(), array(
-                    'name' => 'required',
-                    'patern_name' => 'required',
-                    'matern_name' => 'required',
-                    'email' => 'required|email',
-                    'password' => 'required|confirmed'
-                        )
+            Input::all(), array(
+                'name' => 'required',
+            )
         );
 
         if ($validator->fails()) {
             return Redirect::to('/admin/industries/update/' . Input::get('id'))->withInput()->withErrors($validator);
         }
 
-        $user = User::find(Input::get('id'));
+        $industry = Industry::find(Input::get('id'));
 
-        $user->name = Input::get('name');
+        $industry->name = Input::get('name');
         $user->patern_name = Input::get('patern_name');
         $user->matern_name = Input::get('matern_name');
         $user->email = Input::get('email');
@@ -120,6 +116,21 @@ class IndustriesController extends BaseController {
         return View::make('admin.industries.delete')
                         ->with('section', 'Eliminar Industria')
                         ->with('industry', $industry);
+    }
+    
+    public function delete_industry() {
+        $industry = Industry::find(Input::get('id'));
+        
+        Argument::where('active', '=', 1)
+                ->where('industry_id', '=', $industry->id)
+                ->delete();
+        
+        $industry->delete();
+        
+        return Redirect::to('/admin/industry')->with('message', array(
+                    'type' => 'success',
+                    'message' => 'Industria eliminada.'
+        ));
     }
 
     public function profile() {

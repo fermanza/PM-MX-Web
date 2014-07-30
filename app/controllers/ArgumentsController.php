@@ -53,11 +53,15 @@ class ArgumentsController extends BaseController {
     }
 
     public function update($id) {
-        return View::make('admin.industries.form')
-                        ->with('section', 'Modificar Usuario')
+        $argument = Argument::where('active', '=', 1)
+                ->where('id', '=', $id)
+                ->first();
+        
+        $argument->industry = Industry::find($argument->industry_id);
+        return View::make('admin.arguments.form')
+                        ->with('section', 'Modificar Argumento')
                         ->with('action', 'save-update')
-                        ->with('user', User::find($id))
-                        ->with('user_type', UserType::all());
+                        ->with('argument', $argument);
     }
 
     public function save_update() {
@@ -114,15 +118,14 @@ class ArgumentsController extends BaseController {
                         ->with('industry', $industry);
     }
 
-    public function delete_user() {
-        $user = User::find(Input::get('id'));
-
-        $user->active = 0;
-        $user->save();
-
-        return Redirect::to('/admin/industries')->with('message', array(
+    public function delete_argument() {
+        Argument::where('active', '=', 1)
+                ->where('industry_id', '=', Input::get('id'))
+                ->delete();
+        
+        return Redirect::to('/admin/argument')->with('message', array(
                     'type' => 'success',
-                    'message' => 'Usuario eliminado.'
+                    'message' => 'Industria eliminada.'
         ));
     }
 
