@@ -70,13 +70,7 @@ Route::post('/ws-content/json/ws-industries_by_language_id', function() {
 
         if ( count($industries) > 0 ) {
             foreach($industries as $industry){
-                if($industry->language_id == 1){
-                    $lang = "esp";
-                }
-                else if($industry->language_id == 2){
-                    $lang = "eng";
-                }
-                $industry->url_img = URL::to('img/ios/'.$lang.'/'.$industry->img);
+                $industry->url_img = URL::to('img/ios/'.$industry->img);
             }
             $ws_industries = array(
                 'code' => 1,
