@@ -1,6 +1,10 @@
 body {
-	background-color: #fbfbfb;
-	padding-top: 70px;
+    background-color: #fbfbfb;
+    padding-top: 70px;
+}
+.body-show{
+    background-color: #fbfbfb;
+    padding-top: 0px !important;
 }
 
 div.container {
@@ -76,4 +80,13 @@ div.container {
     vertical-align: middle;
     width: 90%;
     float: right;
+}
+@font-face {
+    font-family: MyriadPro-BoldSemiCn;
+    src: url('MyriadPro-BoldSemiCn.otf');
+    font-weight: bold;
+}
+@font-face {
+    font-family: MyriadPro-SemiCn;
+    src: url('MyriadPro-SemiCn.otf');
 }

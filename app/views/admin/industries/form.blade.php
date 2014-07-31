@@ -16,7 +16,7 @@
 	{{Form::open( array('url' => '/admin/industries/'.$action, 'method' => 'POST', 'role' => 'form', 'class' => 'form-horizontal' ) )}}
 		{{Form::hidden('id', $industry->id)}}
 	<fieldset>
-		<legend>Nueva Industria</legend>
+		<legend>{{ $section }}</legend>
     <div class="wrapper">
 		<div class="form-group {{($errors->has('name') ? 'has-error' : '')}} ">
 			<label for="" class="col-sm-2 control-label">Nombre</label>

@@ -29,7 +29,7 @@ $(document).ready(function() {
 	{{Form::open( array('url' => '/admin/arguments/'.$action, 'method' => 'POST', 'role' => 'form', 'class' => 'form-horizontal' ) )}}
 		{{Form::hidden('id', $argument->id)}}
 	<fieldset>
-		<legend>Nuevo Argumento</legend>
+		<legend>{{ $section }}</legend>
 
 		<div class="form-group {{($errors->has('name') ? 'has-error' : '')}} ">
 			<label for="" class="col-sm-2 control-label">Nombre</label>

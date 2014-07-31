@@ -51,6 +51,9 @@ Route::get('/admin/argument/details/{num}', array('before' => 'auth', 'uses' => 
 Route::get('/admin/argument/delete/{num}', array('before' => 'auth', 'uses' => 'ArgumentsController@delete'));
 Route::post('/admin/argument/delete', array('before' => 'auth', 'uses' => 'ArgumentsController@delete_argument'));
 
+Route::get('/show/{num}', 'ShowController@showContent');
+Route::get('/showIcons/{num}', 'ShowController@showIcons');
+
 //Webservices
 
 Route::post('/ws-content/json/ws-industries_by_language_id', function() {
@@ -61,11 +64,20 @@ Route::post('/ws-content/json/ws-industries_by_language_id', function() {
     $language_id = $data_decoded->language_id;
 
     if ($app_name == "Mexico360") {
-        $industries = Industry::select("id", "name", "bg_color", "txt_color")
+        $industries = Industry::select("id", "name", "bg_color", "txt_color", "language_id", "img")
                 ->where('language_id', '=', $language_id)
                 ->get();
 
         if ( count($industries) > 0 ) {
+            foreach($industries as $industry){
+                if($industry->language_id == 1){
+                    $lang = "esp";
+                }
+                else if($industry->language_id == 2){
+                    $lang = "eng";
+                }
+                $industry->url_img = URL::to('img/ios/'.$lang.'/'.$industry->img);
+            }
             $ws_industries = array(
                 'code' => 1,
                 'message' => 'Éxito',
@@ -96,7 +108,7 @@ Route::post('/ws-content/json/ws-all_languages', function() {
     $app_name = $data_decoded->app_name;
 
     if ($app_name == "Mexico360") {
-        $languages = Language::select("id", "name")
+        $languages = Language::select("id", "name", "source", "url_image")
                 ->get();
         
         if ( count($languages) > 0 ) {
@@ -158,5 +170,31 @@ Route::post('/ws-content/json/ws-arguments_by_industry_id_and_language_id', func
 });
 
 Route::get('/hash', function() {
-    return Hash::make('asdfasdf');
+    return Hash::make('mexico360');
+});
+
+Route::get('/arg_update_img', function() {
+    for($i=1; $i <= 20; $i++){
+        $arguments = Argument::
+                where("industry_id", "=", $i)
+                ->where('language_id', '=', 1)
+                ->get();
+        $j = 1;
+        foreach($arguments as $argument){
+            if($i < 10){ $aux = 0; }
+            else{ $aux = ""; }
+            
+            if($j < 10){ $aux2 = 0; }
+            else{ $aux2 = ""; }
+            $argument -> img = $aux.$argument->industry_id."_".$aux2.$j.".png";
+            $argument ->save();
+            $j++;
+        }
+    }
+});
+
+App::missing(function($exception){
+    return Response::view('errors.missing', 
+            array('subtitle' => 'Página no encontrada', 
+                'message' => 'Página no encontrada'), 404);
 });

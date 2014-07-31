@@ -67,36 +67,35 @@ class ArgumentsController extends BaseController {
     public function save_update() {
 
         $validator = Validator::make(
-                        Input::all(), array(
-                    'name' => 'required',
-                    'patern_name' => 'required',
-                    'matern_name' => 'required',
-                    'email' => 'required|email',
-                    'password' => 'required|confirmed'
-                        )
+                Input::all(), array(
+                'id' => 'required',
+                'industry_id' => 'required',
+                'name' => 'required',
+                'source' => 'required',
+                'url_image' => 'required',
+                'language_id' => 'required',
+            )
         );
 
         if ($validator->fails()) {
             return Redirect::to('/admin/industries/update/' . Input::get('id'))->withInput()->withErrors($validator);
         }
 
-        $user = User::find(Input::get('id'));
+        $argument = Argument::find(Input::get('id'));
 
-        $user->name = Input::get('name');
-        $user->patern_name = Input::get('patern_name');
-        $user->matern_name = Input::get('matern_name');
-        $user->email = Input::get('email');
+        $argument->industry_id = Input::get('industry_id');
+        $argument->name = Input::get('name');
+        $argument->source = Input::get('source');
+        $argument->url_image = Input::get('url_image');
+        $argument->language_id = Input::get('language_id');
 
-        if (Input::get('password'))
-            $user->password = Hash::make(Input::get('password'));
+        $argument->active = 1;
 
-        $user->active = 1;
-
-        $user->save();
+        $argument->save();
 
         return Redirect::to('/admin/industries')->with('message', array(
-                    'type' => 'success',
-                    'message' => 'Usuario modificado.'
+                'type' => 'success',
+                'message' => 'Argumento Modificado.'
         ));
     }
 
@@ -126,48 +125,6 @@ class ArgumentsController extends BaseController {
         return Redirect::to('/admin/argument')->with('message', array(
                     'type' => 'success',
                     'message' => 'Industria eliminada.'
-        ));
-    }
-
-    public function profile() {
-        return View::make('admin.industries.profile')
-                        ->with('section', 'Perfil')
-                        ->with('user', Auth::user());
-    }
-
-    public function save_profile() {
-
-        $validator = Validator::make(
-                        Input::all(), array(
-                    'name' => 'required',
-                    'patern_name' => 'required',
-                    'matern_name' => 'required',
-                    'email' => 'required|email',
-                    'password' => 'confirmed'
-                        )
-        );
-
-        if ($validator->fails()) {
-            return Redirect::to('/admin/profile')->withInput()->withErrors($validator);
-        }
-
-        $user = Auth::user();
-
-        $user->name = Input::get('name');
-        $user->patern_name = Input::get('patern_name');
-        $user->matern_name = Input::get('matern_name');
-        $user->email = Input::get('email');
-
-        if (Input::get('password'))
-            $user->password = Hash::make(Input::get('password'));
-
-        $user->active = 1;
-
-        $user->save();
-
-        return Redirect::to('/admin/profile')->with('message', array(
-                    'type' => 'success',
-                    'message' => 'Perfil actualizado.'
         ));
     }
 
