@@ -176,6 +176,10 @@ Route::post('/ws-content/json/ws-arguments_by_argument_id', function() {
             $argument = Argument::select("id", "industry_id", "name")
                 ->where('id', '=', $arg->id)
                 ->first();
+            $industry = Industry::select("bg_color")
+                ->where('id', '=', $argument->industry_id)
+                ->first();
+            $argument->bg_color = $industry->bg_color;
             array_push($arguments, $argument);
         }
 
@@ -225,26 +229,26 @@ Route::get('/arg_update_img', function() {
 //    }
 });
 Route::get('/arg_update_layout', function() {
-//    $colors = Industry::select("bg_color")
-//        ->distinct("bg_color")
-//        ->get();
-//    
-//    foreach($colors as $color){
-//        $industries = Industry::where('bg_color', '=', $color->bg_color)
-//                ->orderBy('id', 'asc')
-//                ->get();
-//        $arguments_esp = Argument::where("industry_id", "=", $industries[0]->id)->get();
-//        
-//        $arguments_eng = Argument::where("industry_id", "=", $industries[1]->id)->get();
-//        
-//        $i=0;
-//        foreach($arguments_esp as $arg){
-//            $arguments_eng[$i]->layout = $arg->layout;
-//            $arguments_eng[$i]->img = $arg->img;
-//            $arguments_eng[$i]->save();
-//            $i++;
-//        }
-//    }
+    $colors = Industry::select("bg_color")
+        ->distinct("bg_color")
+        ->get();
+    
+    foreach($colors as $color){
+        $industries = Industry::where('bg_color', '=', $color->bg_color)
+                ->orderBy('id', 'asc')
+                ->get();
+        $arguments_esp = Argument::where("industry_id", "=", $industries[0]->id)->get();
+        
+        $arguments_eng = Argument::where("industry_id", "=", $industries[1]->id)->get();
+        
+        $i=0;
+        foreach($arguments_esp as $arg){
+            $arguments_eng[$i]->layout = $arg->layout;
+            $arguments_eng[$i]->img = $arg->img;
+            $arguments_eng[$i]->save();
+            $i++;
+        }
+    }
 });
 
 App::missing(function($exception){
