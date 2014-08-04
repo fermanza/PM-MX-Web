@@ -23,7 +23,8 @@
                     if(strlen($argument->name)<70){ $attr = "width: 160px;"; }
                     else if (strlen($argument->name)<=100){ $attr = "width: 170px;"; }
                     else if (strlen($argument->name)<=120){ $attr = "width: 180px;"; }
-                    else if (strlen($argument->name)>120){ $attr = "width: 190px;"; }
+                    else if (strlen($argument->name)<=135){ $attr = "width: 190px;"; }
+                    else if (strlen($argument->name)>135){ $attr = "width: 210px;"; }
                     ?>
                     <div style="<?php echo $attr; ?> height: 325px; text-align: right; margin-left: 65px;">
                         {{ $argument->name }}

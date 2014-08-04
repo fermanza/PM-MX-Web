@@ -251,6 +251,113 @@ Route::get('/arg_update_layout', function() {
     }
 });
 
+Route::post('/ws-content/json/ws-get_all_ind_arg_by_language_id', function() {
+    $data = Input::get('data');
+    $data_decoded = json_decode($data);
+
+    $app_name = $data_decoded->app_name;
+    $language_id = $data_decoded->language_id;
+
+    if ($app_name == "Mexico360") {
+        $industries = Industry::select("id", "name", "bg_color", "txt_color", "img", "language_id")
+                ->where('language_id', '=', $language_id)
+                ->get();
+        $arguments = array();
+        foreach($industries as $industry){
+            $arguments = Argument::select("id", "industry_id", "name", "source", "img", "layout", "language_id")
+                ->where('industry_id', '=', $industry->id)
+                ->get();
+            $industry->arguments = $arguments;
+        }
+        $version = 1;
+        if ( count($industries) > 0 ) {
+            $ws_industries = array(
+                'version' => $version,
+                'industries' => $industries,
+            );
+            return $ws_industries;
+        }
+        else {
+            return array(
+                'code' => 2,
+                'message' => 'Ocurrió un Error'
+            );
+        }
+    }
+    else {
+        return array(
+            'code' => 2,
+            'message' => 'Ocurrió un Error'
+        );
+    }
+});
+
+Route::get('/renameFilesiOS', function() {
+    
+//    die;
+//    for($i = 1; $i<=20; $i++){
+//        if($i<10){ $industry = "0".$i; }
+//        else{ $industry = $i; }
+//        for($j = 1; $j<=70; $j++){
+//            if($j<10){ $argument = "0".$j; }
+//            else{ $argument = $j; }
+//            
+//            $filename = getcwd().'\\img\\ios\\'.$industry.'_'.$argument.'_@2x.png';
+//            $filename2 = getcwd().'\\img\\ios\\'.$industry.'_'.$argument.'@2x.png';
+//            if (file_exists($filename2)) {
+////                rename(($filename), ($filename2));
+//                if(file_exists(getcwd().'\\img\\ios\\'.$industry.'_'.$argument.'_568h@2x.png')){
+//                    unlink(getcwd().'\\img\\ios\\'.$industry.'_'.$argument.'_568h@2x.png');
+//                }
+//            }
+////            unlink(getcwd().'\\img\\ios\\'.$industry.'_'.$argument.'_568h@2x.png');
+//        }
+//    }
+    for($i = 1; $i<=20; $i++){
+        if($i<10){ $industry = "0".$i; }
+        else{ $industry = $i; }
+        $filename = getcwd().'\\img\\ios\\ic_'.$industry.'_@2x.png';
+        $filename2 = getcwd().'\\img\\ios\\ic_'.$industry.'@2x.png';
+        if (file_exists($filename)) {
+            rename(($filename), ($filename2));
+        }
+    }
+});
+
+Route::get('/renameFilesAndroid', function() {
+    for($i = 1; $i<=20; $i++){
+        if($i<10){ $industry = "0".$i; }
+        else{ $industry = $i; }
+        for($j = 1; $j<=70; $j++){
+            if($j<10){ $argument = "0".$j; }
+            else{ $argument = $j; }
+            
+            $filename = getcwd().'\\img\\android\\'.$industry.'_'.$argument.'.png';
+            $filename2 = getcwd().'\\img\\android\\'.$industry.'_'.$argument.'_@2x.png';
+            $filename3 = getcwd().'\\img\\android\\'.$industry.'_'.$argument.'_568h@2x.png';
+            
+            if (file_exists($filename)) {
+                unlink($filename);
+            }
+            if (file_exists($filename2)) {
+                unlink($filename2);
+            }
+            if (file_exists($filename3)) {
+                rename(("arg_".$filename3), ($filename));
+            }
+        }
+    }
+    for($i = 1; $i<=20; $i++){
+        if($i<10){ $industry = "0".$i; }
+        else{ $industry = $i; }
+        $filename = getcwd().'\\img\\android\\ic_'.$industry.'.png';
+        $filename2 = getcwd().'\\img\\android\\ic_'.$industry.'_@2x.png';
+        if (file_exists($filename)) {
+            rename(($filename), ($filename2));
+        }
+    }
+});
+
 App::missing(function($exception){
     return Response::view('errors.missing', 
             array('subtitle' => 'Página no encontrada', 
