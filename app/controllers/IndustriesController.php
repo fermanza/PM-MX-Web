@@ -12,7 +12,7 @@ class IndustriesController extends BaseController {
 
     public function create() {
         return View::make('admin.industries.form')
-                        ->with('section', 'Nuevo Usuario')
+                        ->with('section', 'Nueva Industria')
                         ->with('action', 'save-create')
                         ->with('industry', new Industry);
     }
@@ -68,6 +68,7 @@ class IndustriesController extends BaseController {
 
         $validator = Validator::make(
             Input::all(), array(
+                'id' => 'required',
                 'name' => 'required',
             )
         );
@@ -79,20 +80,15 @@ class IndustriesController extends BaseController {
         $industry = Industry::find(Input::get('id'));
 
         $industry->name = Input::get('name');
-        $user->patern_name = Input::get('patern_name');
-        $user->matern_name = Input::get('matern_name');
-        $user->email = Input::get('email');
+        $industry->bg_color = Input::get('bg_color');
+        $industry->txt_color = Input::get('txt_color');
+        $industry->url_image = Input::get('url_image');
 
-        if (Input::get('password'))
-            $user->password = Hash::make(Input::get('password'));
-
-        $user->active = 1;
-
-        $user->save();
-
+        $industry->save();
+        
         return Redirect::to('/admin/industries')->with('message', array(
                     'type' => 'success',
-                    'message' => 'Usuario modificado.'
+                    'message' => 'Industria Modificada.'
         ));
     }
 
@@ -130,48 +126,6 @@ class IndustriesController extends BaseController {
         return Redirect::to('/admin/industry')->with('message', array(
                     'type' => 'success',
                     'message' => 'Industria eliminada.'
-        ));
-    }
-
-    public function profile() {
-        return View::make('admin.industries.profile')
-                        ->with('section', 'Perfil')
-                        ->with('user', Auth::user());
-    }
-
-    public function save_profile() {
-
-        $validator = Validator::make(
-                        Input::all(), array(
-                    'name' => 'required',
-                    'patern_name' => 'required',
-                    'matern_name' => 'required',
-                    'email' => 'required|email',
-                    'password' => 'confirmed'
-                        )
-        );
-
-        if ($validator->fails()) {
-            return Redirect::to('/admin/profile')->withInput()->withErrors($validator);
-        }
-
-        $user = Auth::user();
-
-        $user->name = Input::get('name');
-        $user->patern_name = Input::get('patern_name');
-        $user->matern_name = Input::get('matern_name');
-        $user->email = Input::get('email');
-
-        if (Input::get('password'))
-            $user->password = Hash::make(Input::get('password'));
-
-        $user->active = 1;
-
-        $user->save();
-
-        return Redirect::to('/admin/profile')->with('message', array(
-                    'type' => 'success',
-                    'message' => 'Perfil actualizado.'
         ));
     }
 

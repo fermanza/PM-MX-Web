@@ -51,6 +51,9 @@ Route::get('/admin/argument/details/{num}', array('before' => 'auth', 'uses' => 
 Route::get('/admin/argument/delete/{num}', array('before' => 'auth', 'uses' => 'ArgumentsController@delete'));
 Route::post('/admin/argument/delete', array('before' => 'auth', 'uses' => 'ArgumentsController@delete_argument'));
 
+Route::get('/show/{num}', 'ShowController@showContent');
+Route::get('/showIcons/{num}', 'ShowController@showIcons');
+
 //Webservices
 
 Route::post('/ws-content/json/ws-industries_by_language_id', function() {
@@ -61,11 +64,14 @@ Route::post('/ws-content/json/ws-industries_by_language_id', function() {
     $language_id = $data_decoded->language_id;
 
     if ($app_name == "Mexico360") {
-        $industries = Industry::select("id", "name", "bg_color", "txt_color")
+        $industries = Industry::select("id", "name", "bg_color", "txt_color", "language_id", "img")
                 ->where('language_id', '=', $language_id)
                 ->get();
 
         if ( count($industries) > 0 ) {
+            foreach($industries as $industry){
+                $industry->url_img = URL::to('img/ios/'.$industry->img);
+            }
             $ws_industries = array(
                 'code' => 1,
                 'message' => 'Éxito',
@@ -96,7 +102,7 @@ Route::post('/ws-content/json/ws-all_languages', function() {
     $app_name = $data_decoded->app_name;
 
     if ($app_name == "Mexico360") {
-        $languages = Language::select("id", "name")
+        $languages = Language::select("id", "name", "source", "url_image")
                 ->get();
         
         if ( count($languages) > 0 ) {
@@ -157,6 +163,96 @@ Route::post('/ws-content/json/ws-arguments_by_industry_id_and_language_id', func
     }
 });
 
+Route::post('/ws-content/json/ws-arguments_by_argument_id', function() {
+    $data = Input::get('data');
+    $data_decoded = json_decode($data);
+
+    $app_name = $data_decoded->app_name;
+    $args_json = $data_decoded->arguments;
+    
+    if ($app_name == "Mexico360") {
+        $arguments = array();
+        foreach($args_json as $arg){
+            $argument = Argument::select("id", "industry_id", "name")
+                ->where('id', '=', $arg->id)
+                ->first();
+            $industry = Industry::select("bg_color")
+                ->where('id', '=', $argument->industry_id)
+                ->first();
+            $argument->bg_color = $industry->bg_color;
+            array_push($arguments, $argument);
+        }
+
+        if ( count($arguments) > 0 ) {
+            return array(
+                'code' => 1,
+                'message' => 'Éxito',
+                array('arguments' => $arguments)
+            );
+        }
+        else {
+            return array(
+                'code' => 2,
+                'message' => 'Ocurrió un Error'
+            );
+        }
+    }
+    else {
+        return array(
+            'code' => 2,
+            'message' => 'Ocurrió un Error'
+        );
+    }
+});
+
 Route::get('/hash', function() {
-    return Hash::make('asdfasdf');
+    return Hash::make('mexico360');
+});
+
+Route::get('/arg_update_img', function() {
+//    for($i=1; $i <= 20; $i++){
+//        $arguments = Argument::
+//                where("industry_id", "=", $i)
+//                ->where('language_id', '=', 1)
+//                ->get();
+//        $j = 1;
+//        foreach($arguments as $argument){
+//            if($i < 10){ $aux = 0; }
+//            else{ $aux = ""; }
+//            
+//            if($j < 10){ $aux2 = 0; }
+//            else{ $aux2 = ""; }
+//            $argument -> img = $aux.$argument->industry_id."_".$aux2.$j.".png";
+//            $argument ->save();
+//            $j++;
+//        }
+//    }
+});
+Route::get('/arg_update_layout', function() {
+    $colors = Industry::select("bg_color")
+        ->distinct("bg_color")
+        ->get();
+    
+    foreach($colors as $color){
+        $industries = Industry::where('bg_color', '=', $color->bg_color)
+                ->orderBy('id', 'asc')
+                ->get();
+        $arguments_esp = Argument::where("industry_id", "=", $industries[0]->id)->get();
+        
+        $arguments_eng = Argument::where("industry_id", "=", $industries[1]->id)->get();
+        
+        $i=0;
+        foreach($arguments_esp as $arg){
+            $arguments_eng[$i]->layout = $arg->layout;
+            $arguments_eng[$i]->img = $arg->img;
+            $arguments_eng[$i]->save();
+            $i++;
+        }
+    }
+});
+
+App::missing(function($exception){
+    return Response::view('errors.missing', 
+            array('subtitle' => 'Página no encontrada', 
+                'message' => 'Página no encontrada'), 404);
 });
