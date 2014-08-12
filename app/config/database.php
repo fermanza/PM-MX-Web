@@ -59,7 +59,7 @@ return array(
 //			'username'  => 'root',
 //			'password'  => 'vertrigo',
 			'driver'    => 'mysql',
-			'host'      => '162.242.242.84:3306',
+			'host'      => '162.242.242.84',
 			'database'  => 'zadmin_mexico360',
 			'username'  => 'vsweb',
 			'password'  => '2ybygyden',
