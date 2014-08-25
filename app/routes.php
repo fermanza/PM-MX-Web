@@ -267,15 +267,72 @@ Route::post('/ws-content/json/ws-get_all_ind_arg_by_language_id', function() {
             $arguments = Argument::select("id", "industry_id", "name", "source", "img", "layout", "language_id")
                 ->where('industry_id', '=', $industry->id)
                 ->get();
+            foreach($arguments as $argument){
+                $pattern = "<b>";
+                $replacement = "";
+                $argument->unformatted = str_replace($pattern, $replacement, $argument->name);
+                $pattern = "</b>";
+                $replacement = "";
+                $argument->unformatted = str_replace($pattern, $replacement, $argument->unformatted);
+                
+                $pattern = "<b>";
+                $txt_color = $industry->txt_color;
+                $replacement = "<b style='font-family: MyriadPro-BoldSemiCn; color: $txt_color; font-weight:bold;'>";
+                
+                $argument->name = str_replace($pattern, $replacement, $argument->name);
+                
+                $open_span = "<div style='font-family: MyriadPro-SemiCn; color: #FFFFFF; font-size: 17px;'>";
+                $close_span = "</div>";
+                $argument->name = $open_span.$argument->name.$close_span;
+                
+//                $open_span = "<span style='font-family: MyriadPro-SemiCn; color: $txt_color; font-size: 17px; text-align: center; font-size: 12px'>";
+//                $close_span = "</span>";
+//                $argument->source = $open_span.$argument->source.$close_span;
+            }
             $industry->arguments = $arguments;
         }
         $version = 1;
         if ( count($industries) > 0 ) {
+            $version = Version::first();
             $ws_industries = array(
-                'version' => $version,
+                'version' => $version->id,
                 'industries' => $industries,
             );
             return $ws_industries;
+        }
+        else {
+            return array(
+                'code' => 2,
+                'message' => 'Ocurrió un Error'
+            );
+        }
+    }
+    else {
+        return array(
+            'code' => 2,
+            'message' => 'Ocurrió un Error'
+        );
+    }
+});
+
+Route::get('/ws-content/json/ws-get_images/{num}', function($argument_id) {
+
+    $argument = Argument::select("img")->where("id", "=", $argument_id)->first();
+    echo "<img src='".URL::to('/img/cards/'.$argument->img)."' />";
+});
+
+Route::post('/ws-content/json/ws-get_version', function() {
+    $data = Input::get('data');
+    $data_decoded = json_decode($data);
+    $app_name = $data_decoded->app_name;
+
+    if ($app_name == "Mexico360") {
+        $version = Version::first();
+    
+        if ( isset($version->id) ) {
+            return array(
+                'version' => $version->id
+            );
         }
         else {
             return array(
@@ -335,6 +392,7 @@ Route::get('/renameFilesAndroid', function() {
             $filename = getcwd().'\\img\\android\\'.$industry.'_'.$argument.'.png';
             $filename2 = getcwd().'\\img\\android\\'.$industry.'_'.$argument.'_@2x.png';
             $filename3 = getcwd().'\\img\\android\\'.$industry.'_'.$argument.'_568h@2x.png';
+            $filename4 = getcwd().'\\img\\android\\arg_'.$industry.'_'.$argument.'.png';
             
             if (file_exists($filename)) {
                 unlink($filename);
@@ -343,7 +401,7 @@ Route::get('/renameFilesAndroid', function() {
                 unlink($filename2);
             }
             if (file_exists($filename3)) {
-                rename(("arg_".$filename3), ($filename));
+                rename(($filename3), ($filename4));
             }
         }
     }
@@ -351,9 +409,10 @@ Route::get('/renameFilesAndroid', function() {
         if($i<10){ $industry = "0".$i; }
         else{ $industry = $i; }
         $filename = getcwd().'\\img\\android\\ic_'.$industry.'.png';
-        $filename2 = getcwd().'\\img\\android\\ic_'.$industry.'_@2x.png';
+        $filename2 = getcwd().'\\img\\android\\ic_'.$industry.'@2x.png';
         if (file_exists($filename)) {
-            rename(($filename), ($filename2));
+            unlink($filename);
+            rename(($filename2), ($filename));
         }
     }
 });

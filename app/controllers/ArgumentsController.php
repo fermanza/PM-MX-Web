@@ -11,13 +11,21 @@ class ArgumentsController extends BaseController {
     }
 
     public function create() {
+        $industries = Industry::get();
+        
         return View::make('admin.arguments.form')
                         ->with('section', 'Nuevo Argumento')
                         ->with('action', 'save-create')
+                        ->with('industries', $industries)
                         ->with('argument', new Argument);
     }
 
     public function save_create() {
+        
+        //id
+        //name
+        //industry_id
+        //argumet_image
 
         $validator = Validator::make(
                         Input::all(), array(

@@ -26,11 +26,13 @@ $(document).ready(function() {
     });
 
 </script>
-	{{Form::open( array('url' => '/admin/arguments/'.$action, 'method' => 'POST', 'role' => 'form', 'class' => 'form-horizontal' ) )}}
+	{{Form::open( array('url' => '/admin/arguments/'.$action, 'method' => 'POST', 
+        'role' => 'form', 'class' => 'form-horizontal',
+        'files'=> true) )}}
 		{{Form::hidden('id', $argument->id)}}
 	<fieldset>
 		<legend>{{ $section }}</legend>
-
+                
 		<div class="form-group {{($errors->has('name') ? 'has-error' : '')}} ">
 			<label for="" class="col-sm-2 control-label">Nombre</label>
 			<div class="col-sm-6">
@@ -40,8 +42,29 @@ $(document).ready(function() {
 				@endif
 			</div>
 		</div>
-
-
+                
+		<div class="form-group {{($errors->has('name') ? 'has-error' : '')}} ">
+			<label for="" class="col-sm-2 control-label">Industria perteneciente</label>
+			<div class="col-sm-6">
+                            <select name="industry_id" id="industry_id" class="form-control">
+                                <?php
+                                foreach($industries as $industry){
+                                ?>
+                                    <option value="<?= $industry->id ?>"><?= $industry->name ?></option>
+                                <?php
+                                }
+                                ?>
+                            </select>
+			</div>
+		</div>
+                
+		<div class="form-group {{($errors->has('name') ? 'has-error' : '')}} ">
+			<label for="" class="col-sm-2 control-label">Imagen del Argumento</label>
+			<div class="col-sm-6">
+                            <input type="file" name="argumet_image" id="argument_image">
+			</div>
+		</div>
+                
 		{{Form::submit('Guardar', array('class' => 'btn btn-success'))}}
                 {{link_to('/admin/industry/', 'Cancelar', array('class' => 'btn btn-primary'))}}
 
