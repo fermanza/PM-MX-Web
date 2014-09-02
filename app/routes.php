@@ -378,6 +378,7 @@ Route::get('/renameFilesiOS', function() {
         if (file_exists($filename)) {
             rename(($filename), ($filename2));
         }
+        unlink(getcwd().'\\img\\ios\\'.$industry.'_'.$argument.'_568h@2x.png');
     }
 });
 

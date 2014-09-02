@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>M&eacute;xico 360 | {{$section}}</title>
+		<title>M&eacute;xico 360</title>
 		<meta charset="UTF-8" />
 		<link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
 		<link rel="stylesheet" href="{{asset('css/default.css')}}">

@@ -12,7 +12,6 @@ class ShowController extends BaseController {
                     ->first();
 
             return View::make('show.index')
-                            ->with('section', 'Mostrar Argumento')
                             ->with('action', 'save-update')
                             ->with('argument', $argument);
         }
