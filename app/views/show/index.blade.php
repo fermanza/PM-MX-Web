@@ -41,7 +41,8 @@
             if($argument->layout == 2){
             ?>
                 <div style="width: 280px; height: 400px; margin-left: auto; margin-right: auto;
-                     background-repeat: no-repeat; background-image: url('<?php echo asset('img/cards/'.$argument->img) ?>')">
+                     background-repeat: no-repeat;
+                     background-image: url('<?php echo asset('img/cards/'.$argument->img) ?>')">
                     <div style="width: 280px; height: 175px;"></div>
                     <?php
                     $attr = "width: 155px; padding-top: 25px;";
