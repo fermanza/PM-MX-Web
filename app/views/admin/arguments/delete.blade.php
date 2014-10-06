@@ -4,6 +4,7 @@
 
 	{{Form::open( array('url' => '/admin/argument/delete', 'method' => 'POST', 'role' => 'form', 'class' => 'form-horizontal' ) )}}
 		{{Form::hidden('id', $argument->id)}}
+		{{Form::hidden('industry_id', $industry->id)}}
 	<fieldset>
 		<legend>Eliminar Argumento</legend>
 

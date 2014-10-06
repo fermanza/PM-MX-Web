@@ -22,29 +22,23 @@ class IndustriesController extends BaseController {
         $validator = Validator::make(
                         Input::all(), array(
                     'name' => 'required',
-                    'patern_name' => 'required',
-                    'matern_name' => 'required',
-                    'email' => 'required|email|unique:users',
-                    'password' => 'required|confirmed',
-                    'user_type' => 'required'
-                        )
+                    )
         );
 
         if ($validator->fails()) {
-            return Redirect::to('/admin/industries/create')->withInput()->withErrors($validator);
+            return Redirect::to('/admin/industry/create')->withInput()->withErrors($validator);
         }
 
-        $user = new User;
+        $industry = new Industry;
 
-        $user->name = Input::get('name');
-        $user->patern_name = Input::get('patern_name');
-        $user->matern_name = Input::get('matern_name');
-        $user->email = Input::get('email');
-        $user->password = Hash::make(Input::get('password'));
-        $user->active = 1;
-        $user->user_type = Input::get('user_type');
+        $industry->name = Input::get('name');
+        $industry->bg_color = Input::get('bg_color');
+        $industry->txt_color = Input::get('txt_color');
+        
+        $industry->active = 1;
+        
 
-        $user->save();
+        $industry->save();
 
         return Redirect::to('/admin/industries')->with('message', array(
                     'type' => 'success',
@@ -82,11 +76,11 @@ class IndustriesController extends BaseController {
         $industry->name = Input::get('name');
         $industry->bg_color = Input::get('bg_color');
         $industry->txt_color = Input::get('txt_color');
-        $industry->url_image = Input::get('url_image');
+        //$industry->url_image = Input::get('url_image');
 
         $industry->save();
         
-        return Redirect::to('/admin/industries')->with('message', array(
+        return Redirect::to('/admin/industry')->with('message', array(
                     'type' => 'success',
                     'message' => 'Industria Modificada.'
         ));

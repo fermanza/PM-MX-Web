@@ -13,7 +13,7 @@
 <script type="text/javascript" src="{{asset('js/layout.js?ver=1.0.2')}}"></script>
 
 
-	{{Form::open( array('url' => '/admin/industries/'.$action, 'method' => 'POST', 'role' => 'form', 'class' => 'form-horizontal' ) )}}
+	{{Form::open( array('url' => '/admin/industry/'.$action, 'method' => 'POST', 'role' => 'form', 'class' => 'form-horizontal' ) )}}
 		{{Form::hidden('id', $industry->id)}}
 	<fieldset>
 		<legend>{{ $section }}</legend>
