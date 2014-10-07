@@ -90,3 +90,9 @@ div.container {
     font-family: MyriadPro-SemiCn;
     src: url('MyriadPro-SemiCn.otf');
 }
+.container_layout{
+    float: right;
+    background-color: #000000;
+    margin-top: -250px;
+    margin-right: 25px;
+}

@@ -92,7 +92,7 @@
             </select>
         </div>
     </div>
-    <div id="layout_container" style="float: right; background-color: #000000;"></div>
+    <div id="layout_container" class="container_layout"></div>
     {{Form::submit('Guardar', array('class' => 'btn btn-success'))}}
     {{link_to('/admin/industry/', 'Cancelar', array('class' => 'btn btn-primary'))}}
 
