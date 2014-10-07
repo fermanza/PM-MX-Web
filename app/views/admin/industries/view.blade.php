@@ -5,7 +5,7 @@
 	{{Form::open( array('url' => '/admin/industrys/', 'method' => 'POST', 'role' => 'form', 'class' => 'form-horizontal' ) )}}
 		{{Form::hidden('id', $industry->id)}}
 	<fieldset>
-		<legend>Industrias</legend>
+		<legend>Ver Industria</legend>
 
 		<div class="form-group bottom-margin-industries">
 			<label for="" class="col-sm-2 control-label black">Nombre</label>

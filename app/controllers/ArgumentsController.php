@@ -11,53 +11,47 @@ class ArgumentsController extends BaseController {
     }
 
     public function create() {
-        $industries = Industry::get();
+        $industries = Industry::all();
         
         return View::make('admin.arguments.form')
                         ->with('section', 'Nuevo Argumento')
                         ->with('action', 'save-create')
                         ->with('industries', $industries)
-                         ->with('languages', Language::all())
+                        ->with('languages', Language::all())
                         ->with('argument', new Argument);
     }
 
     public function save_create() {
-        
-        //id
-        //name
-        //industry_id
-        //argumet_image
 
         $validator = Validator::make(
-                    Input::all(), array(
-                    'name' => 'required',
-                    'patern_name' => 'required',
-                    'matern_name' => 'required',
-                    'email' => 'required|email|unique:users',
-                    'password' => 'required|confirmed',
-                    'user_type' => 'required'
-                        )
+            Input::all(), array(
+                'industry_id' => 'required',
+                'name' => 'required',
+                'language_id' => 'required',
+            )
         );
-
         if ($validator->fails()) {
             return Redirect::to('/admin/industries/create')->withInput()->withErrors($validator);
         }
+        $argument = new Argument;
+        
+        $argument->industry_id = Input::get('industry_id');
+        $argument->name = Input::get('name');
+        //$argument->source = Input::get('source');
+        
+        if(Input::get('url_image')!= ""){
+            $argument->url_image = Input::get('url_image');
+        } 
+        $argument->language_id = Input::get('language_id');
+        $argument->layout = Input::get('layout');
 
-        $user = new User;
+        $argument->active = 1;
 
-        $user->name = Input::get('name');
-        $user->patern_name = Input::get('patern_name');
-        $user->matern_name = Input::get('matern_name');
-        $user->email = Input::get('email');
-        $user->password = Hash::make(Input::get('password'));
-        $user->active = 1;
-        $user->user_type = Input::get('user_type');
+        $argument->save();
 
-        $user->save();
-
-        return Redirect::to('/admin/industries')->with('message', array(
-                    'type' => 'success',
-                    'message' => 'Usuario creado.'
+        return Redirect::to('/admin/argument')->with('message', array(
+                'type' => 'success',
+                'message' => 'Argumento Creado.'
         ));
     }
 
@@ -78,12 +72,12 @@ class ArgumentsController extends BaseController {
     public function save_update() {
         
         $validator = Validator::make(
-                Input::all(), array(
+            Input::all(), array(
                 'id' => 'required',
                 'industry_id' => 'required',
                 'name' => 'required',
                 'language_id' => 'required',
-                )
+            )
         );
 
         if ($validator->fails()) {
@@ -96,8 +90,7 @@ class ArgumentsController extends BaseController {
         $argument->name = Input::get('name');
         //$argument->source = Input::get('source');
         
-        $url_image = Input::get('url_image');
-        if(!isset($url_image)){
+        if(Input::get('url_image')!= ""){
             $argument->url_image = Input::get('url_image');
         } 
         $argument->language_id = Input::get('language_id');
@@ -107,7 +100,7 @@ class ArgumentsController extends BaseController {
 
         $argument->save();
 
-        return Redirect::to('/admin/industry')->with('message', array(
+        return Redirect::to('/admin/argument')->with('message', array(
                 'type' => 'success',
                 'message' => 'Argumento Modificado.'
         ));
