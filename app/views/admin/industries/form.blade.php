@@ -31,7 +31,7 @@
 		<div class="form-group {{($errors->has('bg_color') ? 'has-error' : '')}} ">
 			<label for="" class="col-sm-2 control-label">Color de Fondo</label>
 			<div class="col-sm-6">
-                            {{Form::text('bg_color', Input::old('bg_color') ? Input::old('bg_color') : $industry->bg_color, array('class' => 'form-control-color', 'id' => 'bg_color', 'disabled') )}}
+                            {{Form::text('bg_color', Input::old('bg_color') ? Input::old('bg_color') : $industry->bg_color, array('class' => 'form-control-color', 'id' => 'bg_color', 'readonly') )}}
                             <div id="colorSelector"><div style="<?php if ($industry->bg_color != ""){ echo "background-color: ".$industry->bg_color; } else { echo 'background-color: #0000ff'; } ?>"></div></div>
                             @if($errors->has('bg_color'))
                             <span class="help-block">{{$errors->first('bg_color')}}</span>
@@ -42,7 +42,7 @@
 		<div class="form-group {{($errors->has('txt_color') ? 'has-error' : '')}} ">
 			<label for="" class="col-sm-2 control-label">Color de Texto</label>
 			<div class="col-sm-6">
-                            {{Form::text('bg_color', Input::old('txt_color') ? Input::old('txt_color') : $industry->txt_color, array('class' => 'form-control-color', 'id' => 'txt_color', 'disabled') )}}
+                            {{Form::text('txt_color', Input::old('txt_color') ? Input::old('txt_color') : $industry->txt_color, array('class' => 'form-control-color', 'id' => 'txt_color', 'readonly') )}}
                             <div id="colorSelector2"><div style="<?php if ($industry->txt_color != ""){ echo "background-color: ".$industry->txt_color; } else { echo 'background-color: #0000ff'; } ?>"></div></div>
                             @if($errors->has('txt_color'))
                             <span class="help-block">{{$errors->first('txt_color')}}</span>

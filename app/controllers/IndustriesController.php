@@ -18,13 +18,12 @@ class IndustriesController extends BaseController {
     }
 
     public function save_create() {
-
         $validator = Validator::make(
-                        Input::all(), array(
-                    'name' => 'required',
-                    )
+            Input::all(), array(
+                'name' => 'required',
+            )
         );
-
+        
         if ($validator->fails()) {
             return Redirect::to('/admin/industry/create')->withInput()->withErrors($validator);
         }
@@ -36,11 +35,10 @@ class IndustriesController extends BaseController {
         $industry->txt_color = Input::get('txt_color');
         
         $industry->active = 1;
-        
 
         $industry->save();
 
-        return Redirect::to('/admin/industries')->with('message', array(
+        return Redirect::to('/admin/industry')->with('message', array(
                     'type' => 'success',
                     'message' => 'Usuario creado.'
         ));
@@ -72,7 +70,7 @@ class IndustriesController extends BaseController {
         }
 
         $industry = Industry::find(Input::get('id'));
-
+        
         $industry->name = Input::get('name');
         $industry->bg_color = Input::get('bg_color');
         $industry->txt_color = Input::get('txt_color');

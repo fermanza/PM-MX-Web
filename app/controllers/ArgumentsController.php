@@ -96,7 +96,8 @@ class ArgumentsController extends BaseController {
         $argument->name = Input::get('name');
         //$argument->source = Input::get('source');
         
-        if(!empty(Input::get('url_image'))){
+        $url_image = Input::get('url_image');
+        if(!isset($url_image)){
             $argument->url_image = Input::get('url_image');
         } 
         $argument->language_id = Input::get('language_id');
