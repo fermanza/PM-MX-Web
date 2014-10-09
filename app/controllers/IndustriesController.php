@@ -37,6 +37,7 @@ class IndustriesController extends BaseController {
         $industry->active = 1;
 
         $industry->save();
+        Version::upgradeVersion();
 
         return Redirect::to('/admin/industry')->with('message', array(
                     'type' => 'success',
@@ -77,6 +78,7 @@ class IndustriesController extends BaseController {
         //$industry->url_image = Input::get('url_image');
 
         $industry->save();
+        Version::upgradeVersion();
         
         return Redirect::to('/admin/industry')->with('message', array(
                     'type' => 'success',
@@ -114,6 +116,7 @@ class IndustriesController extends BaseController {
                 ->delete();
         
         $industry->delete();
+        Version::upgradeVersion();
         
         return Redirect::to('/admin/industry')->with('message', array(
                     'type' => 'success',

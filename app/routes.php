@@ -295,7 +295,7 @@ Route::post('/ws-content/json/ws-get_all_ind_arg_by_language_id', function() {
         if ( count($industries) > 0 ) {
             $version = Version::first();
             $ws_industries = array(
-                'version' => $version->id,
+                'version' => $version->version,
                 'industries' => $industries,
             );
             return $ws_industries;
@@ -329,9 +329,9 @@ Route::post('/ws-content/json/ws-get_version', function() {
     if ($app_name == "Mexico360") {
         $version = Version::first();
     
-        if ( isset($version->id) ) {
+        if ( isset($version->version) ) {
             return array(
-                'version' => $version->id
+                'version' => $version->version
             );
         }
         else {

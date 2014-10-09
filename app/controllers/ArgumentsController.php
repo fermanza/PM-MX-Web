@@ -48,6 +48,7 @@ class ArgumentsController extends BaseController {
         $argument->active = 1;
 
         $argument->save();
+        Version::upgradeVersion();
 
         return Redirect::to('/admin/argument')->with('message', array(
                 'type' => 'success',
@@ -99,6 +100,7 @@ class ArgumentsController extends BaseController {
         $argument->active = 1;
 
         $argument->save();
+        Version::upgradeVersion();
 
         return Redirect::to('/admin/argument')->with('message', array(
                 'type' => 'success',
@@ -137,6 +139,7 @@ class ArgumentsController extends BaseController {
             $industry = Industry::find(Input::get('industry_id'));
             $industry->delete();
         }
+        Version::upgradeVersion();
 
         return Redirect::to('/admin/argument')->with('message', array(
                     'type' => 'success',
