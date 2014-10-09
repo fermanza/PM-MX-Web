@@ -418,6 +418,23 @@ Route::get('/renameFilesAndroid', function() {
     }
 });
 
+Route::get('/quitArgPreffix', function() {
+    for($i = 1; $i<=20; $i++){
+        if($i<10){ $industry = "0".$i; }
+        else{ $industry = $i; }
+        for($j = 1; $j<=70; $j++){
+            if($j<10){ $argument = "0".$j; }
+            else{ $argument = $j; }
+            
+            $filename = getcwd().'\\img\\arguments\\arg_'.$industry.'_'.$argument.'.png';
+            $filename2 = str_replace("arg_", "", $filename);
+            if (file_exists($filename)) {
+                rename(($filename), ($filename2));
+            }
+        }
+    }
+});
+
 App::missing(function($exception){
     return Response::view('errors.missing', 
             array('subtitle' => 'Página no encontrada', 

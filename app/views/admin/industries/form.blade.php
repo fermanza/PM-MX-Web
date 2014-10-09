@@ -13,48 +13,66 @@
 <script type="text/javascript" src="{{asset('js/layout.js?ver=1.0.2')}}"></script>
 
 
-	{{Form::open( array('url' => '/admin/industry/'.$action, 'method' => 'POST', 'role' => 'form', 'class' => 'form-horizontal' ) )}}
-		{{Form::hidden('id', $industry->id)}}
-	<fieldset>
-		<legend>{{ $section }}</legend>
-    <div class="wrapper">
-		<div class="form-group {{($errors->has('name') ? 'has-error' : '')}} ">
-			<label for="" class="col-sm-2 control-label">Nombre</label>
-			<div class="col-sm-6">
-                            {{Form::text('name', Input::old('name') ? Input::old('name') : $industry->name, array('class' => 'form-control') )}}
-                            @if($errors->has('name'))
-                            <span class="help-block">{{$errors->first('name')}}</span>
-                            @endif
-			</div>
-		</div>
-                
-		<div class="form-group {{($errors->has('bg_color') ? 'has-error' : '')}} ">
-			<label for="" class="col-sm-2 control-label">Color de Fondo</label>
-			<div class="col-sm-6">
-                            {{Form::text('bg_color', Input::old('bg_color') ? Input::old('bg_color') : $industry->bg_color, array('class' => 'form-control-color', 'id' => 'bg_color', 'readonly') )}}
-                            <div id="colorSelector"><div style="<?php if ($industry->bg_color != ""){ echo "background-color: ".$industry->bg_color; } else { echo 'background-color: #0000ff'; } ?>"></div></div>
-                            @if($errors->has('bg_color'))
-                            <span class="help-block">{{$errors->first('bg_color')}}</span>
-                            @endif
-			</div>
-		</div>
-                
-		<div class="form-group {{($errors->has('txt_color') ? 'has-error' : '')}} ">
-			<label for="" class="col-sm-2 control-label">Color de Texto</label>
-			<div class="col-sm-6">
-                            {{Form::text('txt_color', Input::old('txt_color') ? Input::old('txt_color') : $industry->txt_color, array('class' => 'form-control-color', 'id' => 'txt_color', 'readonly') )}}
-                            <div id="colorSelector2"><div style="<?php if ($industry->txt_color != ""){ echo "background-color: ".$industry->txt_color; } else { echo 'background-color: #0000ff'; } ?>"></div></div>
-                            @if($errors->has('txt_color'))
-                            <span class="help-block">{{$errors->first('txt_color')}}</span>
-                            @endif
-			</div>
-		</div>
+{{Form::open( array('url' => '/admin/industry/'.$action, 'method' => 'POST', 'role' => 'form', 'class' => 'form-horizontal' ) )}}
+        {{Form::hidden('id', $industry->id)}}
+<fieldset>
+        <legend>{{ $section }}</legend>
+<div class="wrapper">
+        <div class="form-group {{($errors->has('name') ? 'has-error' : '')}} ">
+            <label for="" class="col-sm-2 control-label">Nombre</label>
+            <div class="col-sm-6">
+                {{Form::text('name', Input::old('name') ? Input::old('name') : $industry->name, array('class' => 'form-control') )}}
+                @if($errors->has('name'))
+                <span class="help-block">{{$errors->first('name')}}</span>
+                @endif
+            </div>
+        </div>
 
-		{{Form::submit('Guardar', array('class' => 'btn btn-success'))}}
-                {{link_to('/admin/industry/', 'Cancelar', array('class' => 'btn btn-primary'))}}
+        <div class="form-group {{($errors->has('bg_color') ? 'has-error' : '')}} ">
+            <label for="" class="col-sm-2 control-label">Color de Fondo</label>
+            <div class="col-sm-6">
+                {{Form::text('bg_color', Input::old('bg_color') ? Input::old('bg_color') : $industry->bg_color, array('class' => 'form-control-color', 'id' => 'bg_color', 'readonly') )}}
+                <div id="colorSelector"><div style="<?php if ($industry->bg_color != ""){ echo "background-color: ".$industry->bg_color; } else { echo 'background-color: #0000ff'; } ?>"></div></div>
+                @if($errors->has('bg_color'))
+                <span class="help-block">{{$errors->first('bg_color')}}</span>
+                @endif
+            </div>
+        </div>
+
+        <div class="form-group {{($errors->has('txt_color') ? 'has-error' : '')}} ">
+            <label for="" class="col-sm-2 control-label">Color de Texto</label>
+            <div class="col-sm-6">
+                {{Form::text('txt_color', Input::old('txt_color') ? Input::old('txt_color') : $industry->txt_color, array('class' => 'form-control-color', 'id' => 'txt_color', 'readonly') )}}
+                <div id="colorSelector2"><div style="<?php if ($industry->txt_color != ""){ echo "background-color: ".$industry->txt_color; } else { echo 'background-color: #0000ff'; } ?>"></div></div>
+                @if($errors->has('txt_color'))
+                <span class="help-block">{{$errors->first('txt_color')}}</span>
+                @endif
+            </div>
+        </div>
+
+        <div class="form-group {{($errors->has('img') ? 'has-error' : '')}} ">
+            <label for="" class="col-sm-2 control-label">Imagen de la Ind</label>
+            <div class="col-sm-6">
+                <input type="file" name="industry_img" id="industry_img">
+            </div>
+        </div>
+    
+        <div class="form-group {{($errors->has('language') ? 'has-error' : '')}} ">
+            <label for="" class="col-sm-2 control-label">Idioma</label>
+            <div class="col-sm-6">
+                <select name="language_id" class="form-control">
+                    @foreach($languages as $language)
+                    <option value="{{$language->id}}" <?php if ($industry->language_id == $language->id) { ?> selected="selected" <?php } ?>>{{$language->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+
+        {{Form::submit('Guardar', array('class' => 'btn btn-success'))}}
+        {{link_to('/admin/industry/', 'Cancelar', array('class' => 'btn btn-primary'))}}
 
 
-	</fieldset>
+</fieldset>
 </div>
 	{{Form::close()}}
         

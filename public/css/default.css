@@ -96,3 +96,9 @@ div.container {
     margin-top: -250px;
     margin-right: 25px;
 }
+.container_layout_show{
+    float: right;
+    background-color: #000000;
+    margin-top: -240px;
+    margin-right: 25px;
+}

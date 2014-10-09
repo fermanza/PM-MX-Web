@@ -14,6 +14,7 @@ class IndustriesController extends BaseController {
         return View::make('admin.industries.form')
                         ->with('section', 'Nueva Industria')
                         ->with('action', 'save-create')
+                        ->with('languages', Language::all())
                         ->with('industry', new Industry);
     }
 
@@ -21,6 +22,10 @@ class IndustriesController extends BaseController {
         $validator = Validator::make(
             Input::all(), array(
                 'name' => 'required',
+                'bg_color' => 'required',
+                'txt_color' => 'required',
+                'industry_img' => 'required',
+                'language_id' => 'required',
             )
         );
         
@@ -33,6 +38,8 @@ class IndustriesController extends BaseController {
         $industry->name = Input::get('name');
         $industry->bg_color = Input::get('bg_color');
         $industry->txt_color = Input::get('txt_color');
+        $industry->img = Input::get('industry_img');
+        $industry->language_id = Input::get('language_id');
         
         $industry->active = 1;
 
@@ -41,7 +48,7 @@ class IndustriesController extends BaseController {
 
         return Redirect::to('/admin/industry')->with('message', array(
                     'type' => 'success',
-                    'message' => 'Usuario creado.'
+                    'message' => 'Industria Creada'
         ));
     }
 
@@ -120,7 +127,7 @@ class IndustriesController extends BaseController {
         
         return Redirect::to('/admin/industry')->with('message', array(
                     'type' => 'success',
-                    'message' => 'Industria eliminada.'
+                    'message' => 'Industria Eliminada.'
         ));
     }
 

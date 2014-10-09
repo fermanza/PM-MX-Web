@@ -27,6 +27,7 @@ class ArgumentsController extends BaseController {
             Input::all(), array(
                 'industry_id' => 'required',
                 'name' => 'required',
+                'source' => 'required',
                 'language_id' => 'required',
             )
         );
@@ -37,7 +38,7 @@ class ArgumentsController extends BaseController {
         
         $argument->industry_id = Input::get('industry_id');
         $argument->name = Input::get('name');
-        //$argument->source = Input::get('source');
+        $argument->source = Input::get('source');
         
         if(Input::get('url_image')!= ""){
             $argument->url_image = Input::get('url_image');
@@ -76,6 +77,7 @@ class ArgumentsController extends BaseController {
             Input::all(), array(
                 'id' => 'required',
                 'industry_id' => 'required',
+                'source' => 'required',
                 'name' => 'required',
                 'language_id' => 'required',
             )
@@ -89,7 +91,7 @@ class ArgumentsController extends BaseController {
 
         $argument->industry_id = Input::get('industry_id');
         $argument->name = Input::get('name');
-        //$argument->source = Input::get('source');
+        $argument->source = Input::get('source');
         
         if(Input::get('url_image')!= ""){
             $argument->url_image = Input::get('url_image');
@@ -111,6 +113,7 @@ class ArgumentsController extends BaseController {
     public function details($id) {
         $argument = Argument::find($id);
         $industry = Industry::find($argument->industry_id);
+        $argument->language = Language::where("id", "=", $argument->language_id)->first();
         return View::make('admin.arguments.view')
                         ->with('section', 'Eliminar Argumento')
                         ->with('argument', $argument)
@@ -120,6 +123,7 @@ class ArgumentsController extends BaseController {
     public function delete($id) {
         $argument = Argument::find($id);
         $industry = Industry::find($argument->industry_id);
+        $argument->language = Language::where("id", "=", $argument->language_id)->first();
         return View::make('admin.arguments.delete')
                         ->with('section', 'Eliminar Argumento')
                         ->with('argument', $argument)
@@ -129,7 +133,6 @@ class ArgumentsController extends BaseController {
     public function delete_argument() {
         
         $argument = Argument::find(Input::get('id'));
-            
         $argument->active = 0;
         $argument->save();
 
@@ -143,7 +146,7 @@ class ArgumentsController extends BaseController {
 
         return Redirect::to('/admin/argument')->with('message', array(
                     'type' => 'success',
-                    'message' => 'Industria eliminada.'
+                    'message' => 'Argumento Eliminada.'
         ));
     }
 
