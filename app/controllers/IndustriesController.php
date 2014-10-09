@@ -61,6 +61,7 @@ class IndustriesController extends BaseController {
         return View::make('admin.industries.form')
                         ->with('section', 'Modificar Industria')
                         ->with('action', 'save-update')
+                        ->with('languages', Language::all())
                         ->with('industry', $industry);
     }
 
