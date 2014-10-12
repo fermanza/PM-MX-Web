@@ -83,7 +83,7 @@ echo ");
     <div class="form-group {{($errors->has('img') ? 'has-error' : '')}} ">
         <label for="" class="col-sm-2 control-label">Imagen del Argumento</label>
         <div class="col-sm-6">
-            <input type="file" name="argumet_image" id="argument_image">
+            <input type="file" name="img" id="img">
         </div>
     </div>
 

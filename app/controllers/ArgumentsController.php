@@ -2,8 +2,12 @@
 
 class ArgumentsController extends BaseController {
 
-    public function index() {
+    public function index($language_id = 1) {
         $arguments = Argument::where('active', '=', 1)
+                ->where('language_id', '=', $language_id)
+                ->orderBy('language_id', 'asc')
+                ->orderBy('industry_id', 'asc')
+                ->orderBy('name', 'asc')
                 ->get();
         return View::make('admin.arguments.index')
                         ->with('section', 'Control de Argumentos')
@@ -28,6 +32,7 @@ class ArgumentsController extends BaseController {
                 'industry_id' => 'required',
                 'name' => 'required',
                 'source' => 'required',
+                'img' => 'required',
                 'language_id' => 'required',
             )
         );
@@ -40,9 +45,15 @@ class ArgumentsController extends BaseController {
         $argument->name = Input::get('name');
         $argument->source = Input::get('source');
         
-        if(Input::get('url_image')!= ""){
-            $argument->url_image = Input::get('url_image');
-        } 
+        $file = Input::file('img');
+        $argument->img = time().".".substr($file->getClientOriginalName(), -3);
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+            $destinationPath = getcwd()."\\img\\arguments\\";
+        } else {
+            $destinationPath = getcwd()."/img/arguments/";
+        }
+        Input::file('img')->move($destinationPath, $argument->img);
+        
         $argument->language_id = Input::get('language_id');
         $argument->layout = Input::get('layout');
 
@@ -51,7 +62,7 @@ class ArgumentsController extends BaseController {
         $argument->save();
         Version::upgradeVersion();
 
-        return Redirect::to('/admin/argument')->with('message', array(
+        return Redirect::to('/admin/listargument')->with('message', array(
                 'type' => 'success',
                 'message' => 'Argumento Creado.'
         ));
@@ -86,16 +97,25 @@ class ArgumentsController extends BaseController {
         if ($validator->fails()) {
             return Redirect::to('/admin/industry/update/' . Input::get('id'))->withInput()->withErrors($validator);
         }
-
+        
         $argument = Argument::find(Input::get('id'));
 
         $argument->industry_id = Input::get('industry_id');
         $argument->name = Input::get('name');
         $argument->source = Input::get('source');
         
-        if(Input::get('url_image')!= ""){
-            $argument->url_image = Input::get('url_image');
-        } 
+        $argument->img = $argument->img;
+        if (Input::file('img')!="") {
+            $file = Input::file('img');
+            $argument->img = time() . "." . substr($file->getClientOriginalName(), -3);
+            if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+                $destinationPath = getcwd() . "\\img\\arguments\\";
+            } else {
+                $destinationPath = getcwd() . "/img/arguments/";
+            }
+            Input::file('img')->move($destinationPath, $argument->img);
+        }
+        
         $argument->language_id = Input::get('language_id');
         $argument->layout = Input::get('layout');
 
@@ -104,7 +124,7 @@ class ArgumentsController extends BaseController {
         $argument->save();
         Version::upgradeVersion();
 
-        return Redirect::to('/admin/argument')->with('message', array(
+        return Redirect::to('/admin/listargument')->with('message', array(
                 'type' => 'success',
                 'message' => 'Argumento Modificado.'
         ));
@@ -144,7 +164,7 @@ class ArgumentsController extends BaseController {
         }
         Version::upgradeVersion();
 
-        return Redirect::to('/admin/argument')->with('message', array(
+        return Redirect::to('/admin/listargument')->with('message', array(
                     'type' => 'success',
                     'message' => 'Argumento Eliminada.'
         ));

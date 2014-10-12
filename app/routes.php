@@ -34,6 +34,8 @@ Route::get('/admin/login/logout', 'LoginController@logout');
 Route::get('/admin/home', array('before' => 'auth', 'uses' => 'HomeController@index'));
 
 Route::get('/admin/industry', array('before' => 'auth', 'uses' => 'IndustriesController@index'));
+Route::get('/admin/listindustry', array('before' => 'auth', 'uses' => 'IndustriesController@index'));
+Route::get('/admin/listindustry/{num}', array('before' => 'auth', 'uses' => 'IndustriesController@index'));
 Route::get('/admin/industry/create', array('before' => 'auth', 'uses' => 'IndustriesController@create'));
 Route::post('/admin/industry/save-create', array('before' => 'auth', 'uses' => 'IndustriesController@save_create'));
 Route::get('/admin/industry/update/{num}', array('before' => 'auth', 'uses' => 'IndustriesController@update'));
@@ -43,6 +45,8 @@ Route::get('/admin/industry/delete/{num}', array('before' => 'auth', 'uses' => '
 Route::post('/admin/industry/delete', array('before' => 'auth', 'uses' => 'IndustriesController@delete_industry'));
 
 Route::get('/admin/argument', array('before' => 'auth', 'uses' => 'ArgumentsController@index'));
+Route::get('/admin/listargument', array('before' => 'auth', 'uses' => 'ArgumentsController@index'));
+Route::get('/admin/listargument/{num}', array('before' => 'auth', 'uses' => 'ArgumentsController@index'));
 Route::get('/admin/argument/create', array('before' => 'auth', 'uses' => 'ArgumentsController@create'));
 Route::post('/admin/argument/save-create', array('before' => 'auth', 'uses' => 'ArgumentsController@save_create'));
 Route::get('/admin/argument/update/{num}', array('before' => 'auth', 'uses' => 'ArgumentsController@update'));
@@ -318,7 +322,12 @@ Route::post('/ws-content/json/ws-get_all_ind_arg_by_language_id', function() {
 Route::get('/ws-content/json/ws-get_images/{num}', function($argument_id) {
 
     $argument = Argument::select("img")->where("id", "=", $argument_id)->first();
-    echo "<img src='".URL::to('/img/cards/'.$argument->img)."' />";
+    if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+        echo "<img src='".URL::to('/img/arguments/'.$argument->img)."' />";
+    } else {
+//        $destinationPath = getcwd() . "/img/industries/";
+        echo "<img src='".URL::to('/img/arguments/'.$argument->img)."' />";
+    }
 });
 
 Route::post('/ws-content/json/ws-get_version', function() {

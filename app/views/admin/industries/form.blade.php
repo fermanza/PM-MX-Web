@@ -13,8 +13,8 @@
 <script type="text/javascript" src="{{asset('js/layout.js?ver=1.0.2')}}"></script>
 
 
-{{Form::open( array('url' => '/admin/industry/'.$action, 'method' => 'POST', 'role' => 'form', 'class' => 'form-horizontal' ) )}}
-        {{Form::hidden('id', $industry->id)}}
+{{Form::open( array('url' => '/admin/industry/'.$action, 'files'=> true, 'method' => 'POST', 'role' => 'form', 'class' => 'form-horizontal' ) )}}
+    {{Form::hidden('id', $industry->id)}}
 <fieldset>
         <legend>{{ $section }}</legend>
 <div class="wrapper">
@@ -53,7 +53,7 @@
         <div class="form-group {{($errors->has('img') ? 'has-error' : '')}} ">
             <label for="" class="col-sm-2 control-label">Imagen de la Ind</label>
             <div class="col-sm-6">
-                <input type="file" name="industry_img" id="industry_img">
+                <input type="file" name="img" id="img">
             </div>
         </div>
     

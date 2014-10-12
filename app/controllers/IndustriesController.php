@@ -2,8 +2,11 @@
 
 class IndustriesController extends BaseController {
 
-    public function index() {
+    public function index($language_id=1) {
         $industries = Industry::where('active', '=', 1)
+                ->where('language_id', "=", $language_id)
+                ->orderBy('language_id', 'asc')
+                ->orderBy('name', 'asc')
                 ->get();
         return View::make('admin.industries.index')
                         ->with('section', 'Control de Industrias')
@@ -24,7 +27,7 @@ class IndustriesController extends BaseController {
                 'name' => 'required',
                 'bg_color' => 'required',
                 'txt_color' => 'required',
-                'industry_img' => 'required',
+                'img' => 'required',
                 'language_id' => 'required',
             )
         );
@@ -38,7 +41,14 @@ class IndustriesController extends BaseController {
         $industry->name = Input::get('name');
         $industry->bg_color = Input::get('bg_color');
         $industry->txt_color = Input::get('txt_color');
-        $industry->img = Input::get('industry_img');
+        $file = Input::file('img');
+        $industry->img = time() . "." . substr($file->getClientOriginalName(), -3);
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+            $destinationPath = getcwd() . "\\img\\industries\\";
+        } else {
+            $destinationPath = getcwd() . "/img/industries/";
+        }
+        Input::file('img')->move($destinationPath, $industry->img);
         $industry->language_id = Input::get('language_id');
         
         $industry->active = 1;
@@ -46,7 +56,7 @@ class IndustriesController extends BaseController {
         $industry->save();
         Version::upgradeVersion();
 
-        return Redirect::to('/admin/industry')->with('message', array(
+        return Redirect::to('/admin/listindustry')->with('message', array(
                     'type' => 'success',
                     'message' => 'Industria Creada'
         ));
@@ -71,6 +81,7 @@ class IndustriesController extends BaseController {
             Input::all(), array(
                 'id' => 'required',
                 'name' => 'required',
+                'img' => 'required'
             )
         );
 
@@ -83,12 +94,22 @@ class IndustriesController extends BaseController {
         $industry->name = Input::get('name');
         $industry->bg_color = Input::get('bg_color');
         $industry->txt_color = Input::get('txt_color');
-        //$industry->url_image = Input::get('url_image');
+        $industry->img = $industry->img;
+        if (Input::file('img')!="") {
+            $file = Input::file('img');
+            $industry->img = time() . "." . substr($file->getClientOriginalName(), -3);
+            if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+                $destinationPath = getcwd() . "\\img\\industries\\";
+            } else {
+                $destinationPath = getcwd() . "/img/industries/";
+            }
+            Input::file('img')->move($destinationPath, $industry->img);
+        }
 
         $industry->save();
         Version::upgradeVersion();
         
-        return Redirect::to('/admin/industry')->with('message', array(
+        return Redirect::to('/admin/listindustry')->with('message', array(
                     'type' => 'success',
                     'message' => 'Industria Modificada.'
         ));
@@ -126,7 +147,7 @@ class IndustriesController extends BaseController {
         $industry->delete();
         Version::upgradeVersion();
         
-        return Redirect::to('/admin/industry')->with('message', array(
+        return Redirect::to('/admin/listindustry')->with('message', array(
                     'type' => 'success',
                     'message' => 'Industria Eliminada.'
         ));
