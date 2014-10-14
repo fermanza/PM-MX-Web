@@ -322,12 +322,7 @@ Route::post('/ws-content/json/ws-get_all_ind_arg_by_language_id', function() {
 Route::get('/ws-content/json/ws-get_images/{num}', function($argument_id) {
 
     $argument = Argument::select("img")->where("id", "=", $argument_id)->first();
-    if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-        echo "<img src='".URL::to('/img/arguments/'.$argument->img)."' />";
-    } else {
-//        $destinationPath = getcwd() . "/img/industries/";
-        echo "<img src='".URL::to('/img/arguments/'.$argument->img)."' />";
-    }
+    echo URL::to('/img/arguments/'.$argument->img);
 });
 
 Route::post('/ws-content/json/ws-get_version', function() {

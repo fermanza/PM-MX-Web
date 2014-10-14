@@ -13,13 +13,13 @@ class Version extends Eloquent {
     
     public static function upgradeVersion(){
         $version = Version::where('id', '=', 1)->first();
-        $version->version += $version->version;
+        $version->version += 1;
         $version->save();
     }
     
     public static function downgradeVersion(){
         $version = Version::where('id', '=', 1);
-        $version->version -= $version->version;
+        $version->version -= 1;
         $version->save();
     }
     

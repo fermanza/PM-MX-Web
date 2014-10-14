@@ -12,9 +12,11 @@
 			<th></th>
 		</thead>
 		<tbody>
+                        <?php $i= 0; ?>
 			@foreach($arguments as $argument)
+                        <?php $i++; ?>
 			<tr>
-				<td class="td-id">{{$argument->id}}</td>
+				<td class="td-id">{{$i}}</td>
 				<td class="td-arguments">{{$argument->name}}</td>
 				<td>
 					{{link_to('/admin/argument/details/'.$argument->id, 'Ver', array('class' => 'btn btn-info'))}}

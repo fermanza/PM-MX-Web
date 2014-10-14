@@ -12,9 +12,11 @@
 			<th></th>
 		</thead>
 		<tbody>
+                        <?php $i= 0; ?>
 			@foreach($industries as $industry)
+                        <?php $i++; ?>
 			<tr>
-				<td class="td-id">{{$industry->id}}</td>
+				<td class="td-id">{{$i}}</td>
 				<td class="td-arguments">{{$industry->name}}</td>
 				<td>
 					{{link_to('/admin/industry/details/'.$industry->id, 'Ver', array('class' => 'btn btn-info'))}}
