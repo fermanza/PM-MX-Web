@@ -103,6 +103,7 @@ class ArgumentsController extends BaseController {
         $argument->industry_id = Input::get('industry_id');
         $argument->name = Input::get('name');
         $argument->source = Input::get('source');
+        $argument->language_id = Input::get('language_id');
         
         $argument->img = $argument->img;
         if (Input::file('img')!="") {

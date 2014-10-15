@@ -42,7 +42,7 @@
                     </div>
                 </div>
                 
-                <div id="layout_container" class="container_layout_show">
+                <div id="layout_container" class="container_layout_show" style="background-color: <?php echo $industry->bg_color ?>">
                     <image src="{{ URL::to('img/arguments') }}/{{$argument->img}}" width="210px" />
                 </div>
 

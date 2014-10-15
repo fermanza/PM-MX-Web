@@ -81,7 +81,6 @@ class IndustriesController extends BaseController {
             Input::all(), array(
                 'id' => 'required',
                 'name' => 'required',
-                'img' => 'required'
             )
         );
 
@@ -94,6 +93,7 @@ class IndustriesController extends BaseController {
         $industry->name = Input::get('name');
         $industry->bg_color = Input::get('bg_color');
         $industry->txt_color = Input::get('txt_color');
+        $industry->language_id = Input::get('language_id');
         $industry->img = $industry->img;
         if (Input::file('img')!="") {
             $file = Input::file('img');

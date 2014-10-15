@@ -21,5 +21,4 @@ class ShowController extends BaseController {
                         'message' => 'Página no encontrada'));
         }
     }
-    
 }
