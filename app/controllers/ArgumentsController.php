@@ -167,7 +167,7 @@ class ArgumentsController extends BaseController {
 
         return Redirect::to('/admin/listargument')->with('message', array(
                     'type' => 'success',
-                    'message' => 'Argumento Eliminada.'
+                    'message' => 'Argumento Eliminado.'
         ));
     }
 

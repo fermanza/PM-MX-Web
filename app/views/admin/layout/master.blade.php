@@ -30,6 +30,7 @@
                                     <li>{{link_to('admin/listindustry/2', 'Industries')}}</li>
                                     <li>{{link_to('admin/listargument/1', 'Argumentos')}}</li>
                                     <li>{{link_to('admin/listargument/2', 'Arguments')}}</li>
+                                    <li>{{link_to('admin/user', 'Usuarios')}}</li>
                                     <li>{{link_to('apps/Mexico360P.apk', 'Android Test')}}</li>
                                 </ul>
 				<ul class="nav navbar-nav navbar-right">

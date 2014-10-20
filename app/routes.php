@@ -55,6 +55,14 @@ Route::get('/admin/argument/details/{num}', array('before' => 'auth', 'uses' => 
 Route::get('/admin/argument/delete/{num}', array('before' => 'auth', 'uses' => 'ArgumentsController@delete'));
 Route::post('/admin/argument/delete', array('before' => 'auth', 'uses' => 'ArgumentsController@delete_argument'));
 
+Route::get('/admin/user', array('before' => 'auth', 'uses' => 'UserController@index'));
+Route::get('/admin/user/create', array('before' => 'auth', 'uses' => 'UserController@create'));
+Route::post('/admin/user/save-create', array('before' => 'auth', 'uses' => 'UserController@save_create'));
+Route::get('/admin/user/update/{num}', array('before' => 'auth', 'uses' => 'UserController@update'));
+Route::post('/admin/user/save-update', array('before' => 'auth', 'uses' => 'UserController@save_update'));
+Route::get('/admin/user/delete/{num}', array('before' => 'auth', 'uses' => 'UserController@delete'));
+Route::post('/admin/user/delete', array('before' => 'auth', 'uses' => 'UserController@delete_user'));
+
 Route::get('/show/{num}', 'ShowController@showContent');
 Route::get('/showIcons/{num}', 'ShowController@showIcons');
 
