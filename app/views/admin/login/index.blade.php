@@ -4,6 +4,7 @@
 		<title>Pro México 360 | Iniciar Sesión</title>
 		<meta charset="UTF-8">
 		<link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
+		<link rel="shortcut icon" type="image/png" href="{{asset('img/favicon.ico')}}"/>
 		<style type="text/css">
 	      body {
 	        padding-top: 40px;
