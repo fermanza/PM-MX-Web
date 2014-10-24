@@ -341,9 +341,9 @@ Route::post('/ws-content/json/ws-get_version', function() {
     if ($app_name == "Mexico360") {
         $version = Version::first();
     
-        if ( isset($version->id) ) {
+        if ( isset($version->version) ) {
             return array(
-                'version' => $version->id
+                'version' => $version->version
             );
         }
         else {

@@ -54,10 +54,10 @@ return array(
 
 		'mysql' => array(
 			'driver'    => 'mysql',
-			'host'      => 'localhost:3309',
-			'database'  => 'mexico360',
+			'host'      => 'localhost',
+			'database'  => 'zadmin_mexico360',
 			'username'  => 'root',
-			'password'  => 'vertrigo',
+			'password'  => '',
 //			'driver'    => 'mysql',
 //			'host'      => '162.242.242.84',
 //			'database'  => 'zadmin_mexico360',
