@@ -335,7 +335,7 @@ Route::get('/ws-content/json/ws-get_images/{num}', function($argument_id) {
 
 Route::get('/ws-content/json/ws-get_icons/{num}', function($industry_id) {
 
-    $industry = Argument::select("img")->where("id", "=", $industry_id)->first();
+    $industry = Industry::select("img")->where("id", "=", $industry_id)->first();
     echo URL::to('/img/industries/'.$industry->img);
 });
 
